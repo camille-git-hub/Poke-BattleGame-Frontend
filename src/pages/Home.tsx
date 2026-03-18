@@ -1,3 +1,9 @@
+import { useState } from "react";
+import SearchBar from "../components/SearchBar.tsx";
+import PokeCard from "../components/PokeCard.tsx";
+import { Pokemon } from "../types";
+import { savePokemon } from "../services/pokemonService";
+
 export const Home = () => {
 
 const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -7,7 +13,7 @@ const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   const handleSavePokemon = (poke: Pokemon) => {
     savePokemon(poke);
-    setPokemon(prev => prev.map(p => p.id === poke.id ? {...p, saved: true} : p));
+    setPokemons(prev => prev.map(p => p.id === poke.id ? {...p, saved: true} : p));
   }
 
   return (
