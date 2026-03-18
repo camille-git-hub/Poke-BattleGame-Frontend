@@ -9,6 +9,12 @@ import Footer from "./components/Footer.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Mainlayout from "./layouts/mainlayout.tsx";
 //import AuthProvider from "./contexts/AuthContext.tsx";
+import { Home } from "./pages/Home.tsx";
+//import LoginPage from "./pages/LoginPage.tsx";
+//import SignUpPage from "./pages/SignUpPage.tsx";
+//import PokemonDetails from "./pages/PokemonDetails.tsx";
+//import BattlePage from "./pages/BattlePage.tsx";
+//import RosterPage from "./pages/RosterPage.tsx";
 
 function App() {
 
@@ -18,6 +24,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<SignUpPage />} />
+              </Route>
+            <Route path="/" element={<ProtectedRoute />}>
               <Route path="pokemons/:id" element={<PokemonDetails />} />
               <Route path="battle" element={<BattlePage />} />
               <Route path="roster" element={<RosterPage />} />
