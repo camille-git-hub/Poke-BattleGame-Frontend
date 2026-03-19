@@ -1,24 +1,74 @@
-export const Register = () => {
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold mb-6">Register</h1>
-            <form className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-                <div className="mb-4">
-                    <label htmlFor="username" className="block text-gray-700 mb-2">Username</label>
-                    <input type="text" id="username" className="w-full px-3 py-2 border rounded" placeholder="Enter your username" />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="email" className="w-full px-3 py-2 border rounded" placeholder="Enter your email" />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="password" className="w-full px-3 py-2 border rounded" placeholder="Enter your password" />
-                </div>
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Register</button>
-            </form>
-        </div>
-    )
-}
+import { useState } from "react";
+import { signUp } from "../services/api.js";
+import { useNavigate, Link } from "react-router-dom";
 
-export default Register;
+export default function SignUpPage() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  function validatePassword() {
+    if (!password || !email) {
+      return "Please enter a valid email address and a password";
+    } else if (password.length < 8) {
+      return "Password needs to be at least 8 characters long.";
+    }
+    return null;
+  }
+
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setError("");
+
+    const validationError = validatePassword();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      await signUp({ email, password });
+      navigate("/");
+    } catch (e2) {
+      setError("Failed to register user. Please try again.");
+    }
+  }
+
+  return (
+    <div className="max-w-md mx-auto space-y-4 mt-10 p-4">
+      <h1 className="text-3xl font-bold">Register</h1>
+
+      {error && <div className="alert alert-error">{error}</div>}
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <input
+          className="input input-bordered w-full"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+
+        <input
+          className="input input-bordered w-full"
+          value={password}
+          onChange={(e) => setPassword(e.target.value.trim())}
+          placeholder="Password"
+          type="password"
+        />
+
+        <button className="btn btn-primary w-full">Create account</button>
+      </form>
+
+      <p className="text-sm opacity-70">
+        Already have an account?{" "}
+        <Link className="link" to="/login">
+          Login
+        </Link>
+      </p>
+    </div>
+  );
+}
