@@ -1,6 +1,7 @@
 import type { Pokemon } from "../types/Pokemon.ts";
 
-const API_URL = import.meta.env.VITE_API_URL
+// const API_URL = import.meta.env.VITE_API_URL
+const AUTH_API_URL = `http://localhost:${import.meta.env.AUTH_PORT || 3000}`;
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -37,13 +38,18 @@ const getToken = () => {
 
 const signUp = async (userData: { email: string; password: string }) => {
     try {
-        const response = await fetch(`${API_URL}/api/users`, {
+        console.log('Registering user with data:', userData);
+        console.log('Using AUTH_API_URL:', AUTH_API_URL, 'and endpoint:', `${AUTH_API_URL}/auth/register`);
+        const response = await fetch(`${AUTH_API_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(userData),
+            credentials: "include" // this is required for cookies
         });
+        console.log('Received response:', response);
+        console.log('Passed JSON:', JSON.stringify(userData));
         if (!response.ok) {
             throw new Error(`Error found: ${response.status})`);
         }
@@ -57,12 +63,13 @@ const signUp = async (userData: { email: string; password: string }) => {
 
 const login = async (credentials: { email: string; password: string } ) => {
     try {
-        const response = await fetch(`${API_URL}/api/auth/login`, {
+        const response = await fetch(`${AUTH_API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(credentials),
+            credentials: "include" // this is required for cookies
         });
         if (!response.ok) {
             throw new Error(`Error found: ${response.status})`);
