@@ -1,6 +1,6 @@
 const Navbar = () => {
     return (
-        <nav className="bg-gray-800 text-white p-4">
+        <nav className="bg-yellow-600 border-b border-yellow-500 shadow-md text-white p-4">
             <div className="container p-4 mx-auto flex justify-between items-center">
                 <h1 className="text-2xl font-bold">Pokemon Battleground</h1>
                 <div className="p-4 space-x-4">

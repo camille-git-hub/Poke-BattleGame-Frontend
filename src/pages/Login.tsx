@@ -1,20 +1,61 @@
-export const Login = () => {
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold mb-6">Login</h1>
-            <form className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="email" className="w-full px-3 py-2 border rounded" placeholder="Enter your email" />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="password" className="w-full px-3 py-2 border rounded" placeholder="Enter your password" />
-                </div>
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
-            </form>
-        </div>
-    )
-}
+import { useState } from "react";
+import { login } from "../services/api.js";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.tsx";
 
-export default Login;
+export default function LoginPage() {
+  const navigate = useNavigate();
+  const { loginUser } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      setError("");
+
+      const data = await login({ email, password });
+
+      loginUser(data.token);
+
+      navigate("/leaderboard");
+    } catch (e2) {
+      setError("Failed to login. Please check your credentials and try again.");
+    }
+  }
+
+  return (
+    <div className="max-w-md mx-auto space-y-4 mt-10 p-4">
+      <h1 className="text-3xl font-bold">Login</h1>
+
+      {error && <div className="alert alert-error">{error}</div>}
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <input
+          className="input input-bordered w-full"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+
+        <input
+          className="input input-bordered w-full"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          type="password"
+        />
+
+        <button className="btn btn-primary w-full">Login</button>
+      </form>
+
+      <p className="text-sm opacity-70">
+        New here? <Link className="link" to="/register">Create account</Link>
+      </p>
+    </div>
+  );
+}
