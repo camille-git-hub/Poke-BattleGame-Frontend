@@ -1,10 +1,8 @@
-
-import { useState } from "react";
 //import { fetchPokemons } from "./services/api.ts";
 //import { SearchBar } from "./components/SearchBar.tsx";
 //import PokeCard from "./components/PokemonCard.tsx";
 //import { savePoke } from "./services/storage.ts";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Mainlayout from "./layouts/mainlayout.tsx";
 import AuthRoute from "./layouts/protectedroute.tsx";
 //import AuthProvider from "./contexts/AuthContext.tsx";
@@ -16,7 +14,7 @@ import Battle from "./pages/Battle.tsx";
 import Roster from "./pages/Roster.tsx";
 import Leaderboard from "./pages/Leaderboard.tsx";
 function App() {
-
+ 
   return (
    <Routes>
     <Route path="/" element={<Mainlayout />}>
