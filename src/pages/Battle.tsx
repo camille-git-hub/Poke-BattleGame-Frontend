@@ -176,7 +176,7 @@ export default function BattlePage() {
   }
 
   return (
-    <div style={{ padding: 16, maxWidth: 980, margin: "0 auto" }} className="BattlePage">
+    <div className="BattlePage">
       <h2 className="text-4xl text-warning text-center font-bold mb-10 ">Pokémon Battle</h2>
 
       <div style={winner ? { backgroundColor: "lightgreen" } : {}}className="text-center text-lg mb-6 border border-warning rounded-lg p-4">

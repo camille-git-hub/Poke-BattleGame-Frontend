@@ -50,7 +50,7 @@ export default function LoginPage() {
           type="password"
         />
 
-        <button className="btn btn-primary w-full">Login</button>
+        <button className="btn btn-warning w-full">Login</button>
       </form>
 
       <p className="text-sm opacity-70">

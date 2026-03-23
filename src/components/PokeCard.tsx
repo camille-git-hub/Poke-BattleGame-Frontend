@@ -20,11 +20,11 @@ const PokeCard = ({ pokemons, onSave, onDelete }: Props) => {
           </div>
 
           {pokemon.isSaved ? (
-            <button className="btn bg-gray-200 text-black hover:bg-red-400" onClick={() => onDelete?.(pokemon.name)}>
+            <button className="btn bg-gray-200 text-black hover:bg-red-200" onClick={() => onDelete?.(pokemon.name)}>
               Remove from Favourites
             </button>
           ) : (
-            <button className="btn bg-gray-800 text-white hover:bg-gray-600" onClick={() => onSave?.(pokemon)}>
+            <button className="btn btn-warning" onClick={() => onSave?.(pokemon)}>
               + Add to Favourites
             </button>
           )}

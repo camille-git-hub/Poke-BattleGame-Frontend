@@ -60,7 +60,7 @@ export default function SignUpPage() {
           type="password"
         />
 
-        <button className="btn btn-primary w-full">Create account</button>
+        <button className="btn btn-warning w-full">Create account</button>
       </form>
 
       <p className="text-sm opacity-70">
