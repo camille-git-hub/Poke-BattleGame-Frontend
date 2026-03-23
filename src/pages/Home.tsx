@@ -120,7 +120,9 @@ export const Home = () => {
           />
         </div>
       )}
-
+        <section className="mb-8 hline border-t border-warning pt-6">
+      </section>
+      
         <section className="mb-8">
 
         {previewError && <p className="text-red-600">{previewError}</p>}

@@ -71,8 +71,8 @@ function TeamPanel({ team }: { team: Team }) {
   const a = activePokemon(team);
 
   return (
-    <div style={{ border: "1px solid #ddd", borderRadius: 8, padding: 12, width: 360 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+    <div className="flex-1 border border-warning rounded-lg p-4 min-w-[280px]">
+      <div className="flex items-baseline gap-2">
         <strong>Team {team.name}</strong>
         <span style={{ fontSize: 12, opacity: 0.7 }}>
           Active {Math.min(team.i + 1, team.pokemons.length)}/{team.pokemons.length}
@@ -176,33 +176,34 @@ export default function BattlePage() {
   }
 
   return (
-    <div style={{ padding: 16, maxWidth: 980, margin: "0 auto" }}>
-      <h2 style={{ marginTop: 0 }}>Battle UI</h2>
+    <div style={{ padding: 16, maxWidth: 980, margin: "0 auto" }} className="BattlePage">
+      <h2 className="text-4xl text-warning text-center font-bold mb-10 ">Pokémon Battle</h2>
 
-      <div style={{ marginBottom: 12 }}>
+      <div style={winner ? { backgroundColor: "lightgreen" } : {}}className="text-center text-lg mb-6 border border-warning rounded-lg p-4">
         <strong>Status:</strong> {winner ? `Winner is Team ${winner}` : "In progress"}
       </div>
 
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "space-between" }}>
         <TeamPanel team={teamA} />
         <TeamPanel team={teamB} />
       </div>
 
-      <div style={{ marginTop: 14, display: "flex", gap: 8 }}>
-        <button onClick={nextAttack} disabled={!!winner}>
+      <div className="mt-8 flex gap-4 justify-center border-t border-warning pt-6">
+        <button className="border-2 border-warning shadow-md bg-warning text-white hover:bg-warning-dark" onClick={nextAttack} disabled={!!winner}>
           Next attack
         </button>
-        <button onClick={autoFinish} disabled={!!winner}>
-          Auto-finish
+        <button className="border-2 border-warning shadow-md bg-warning text-white hover:bg-warning-dark" onClick={reset}>
+          Restart
         </button>
-        <button onClick={reset}>Reset</button>
       </div>
 
-      <div style={{ marginTop: 14 }}>
-        <div style={{ fontSize: 12, opacity: 0.7 }}>Log (newest first)</div>
+      <div className="mt-8 border-t shadow-md p-4 rounded-lg border-warning">
+        <div className="text-sm text-muted" style={{ fontSize: 12, opacity: 0.7 }}>
+          Log (newest first)
+        </div>
         <ol style={{ marginTop: 6 }}>
           {log.slice(0, 12).map((line, idx) => (
-            <li key={idx} style={{ fontFamily: "monospace" }}>
+            <li key={idx} className="font-mono text-sm mb-1 px-2 py-1 bg-gray-100 rounded">
               {line}
             </li>
           ))}
