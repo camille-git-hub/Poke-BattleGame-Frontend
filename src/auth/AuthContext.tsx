@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 export type AuthContextType = {
   token: string | null,
+  email: string | null,
   isAuthenticated: boolean,
   loading: boolean,
-  loginUser: (token: string) => void,
+  loginUser: (token: string, email: string) => void,
   logoutUser: () => void,
 };
 
@@ -23,29 +24,37 @@ export function useAuth(): AuthContextType {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const savedToken= localStorage.getItem("token");
+    const savedEmail = localStorage.getItem("email");
     setToken(savedToken); 
+    setEmail(savedEmail);
     setLoading(false); 
   }, []);
 
-  function loginUser(newToken: string) {
+  function loginUser(newToken: string, userEmail: string) {
     setToken(newToken);
+    setEmail(userEmail);
     localStorage.setItem("token", newToken);
+    localStorage.setItem("email", userEmail);
   }
 
   function logoutUser() {
     setToken(null);
+    setEmail(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
   }
 
   const isAuthenticated = Boolean(token);
 
   const value = {
     token,
+    email,
     isAuthenticated,
     loading,
     loginUser,

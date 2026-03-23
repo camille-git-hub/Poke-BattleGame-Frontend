@@ -82,4 +82,22 @@ const login = async (credentials: { email: string; password: string } ) => {
     }
 };
 
-export { getToken, signUp, login, fetchPokemons, fetchPokemonByName };  
+const logout = async () => {
+    try {
+        const response = await fetch(`${AUTH_API_URL}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: "include" // this is required for cookies
+        });
+        if (!response.ok) {
+            throw new Error(`Error found: ${response.status})`);
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        throw new Error('Failed to logout. Please try again.');
+    }
+}
+
+export { getToken, signUp, login, fetchPokemons, fetchPokemonByName, logout };  

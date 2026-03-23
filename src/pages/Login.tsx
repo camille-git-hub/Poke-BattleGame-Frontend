@@ -20,7 +20,7 @@ export default function LoginPage() {
 
       const data = await login({ email, password });
 
-      loginUser(data.token);
+      loginUser(data.token, email);
 
       navigate("/leaderboard");
     } catch (e2) {
